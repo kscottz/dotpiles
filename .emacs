@@ -1,3 +1,33 @@
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+
+(setq package-list '(ace-flyspell ace-jump-mode auto-complete concurrent csv-mode ctable dash deferred epc epl flycheck flycheck-pyflakes flymake-python-pyflakes flymake-easy flymake-json flymake-json flyspell-correct jedi jedi-core jinja2-mode json-reformat python python-environment w3 virtualenv pkg-info pkg-info ))
+(defun ensure-package-installed (&rest packages)
+  "Assure every package is installed, ask for installation if it’s not.
+
+Return a list of installed packages or nil for every skipped package."
+  (mapcar
+   (lambda (package)
+     ;; (package-installed-p 'evil)
+     (if (package-installed-p package)
+         nil
+       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
+           (package-install package)
+         package)))
+   packages))
+
+;; make sure to have downloaded archive description.
+;; Or use package-archive-contents as suggested by Nicolas Dudebout
+(or (file-exists-p package-user-dir)
+   (package-refresh-contents))
+
+(ensure-package-installed 'iedit 'magit) ;  --> (nil nil) if iedit and magit are already installed
+
+;; activate installed packages
+(package-initialize)
+
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -38,21 +68,7 @@
 
 (put 'downcase-region 'disabled nil)
 
- (add-hook 'after-init-hook #'global-flycheck-mode)
-
-(require 'web-beautify) ;; Not necessary if using ELPA package
-(eval-after-load 'js2-mode
-  '(define-key js2-mode-map (kbd "C-c b") 'web-beautify-js))
-(eval-after-load 'json-mode
-  '(define-key json-mode-map (kbd "C-c b") 'web-beautify-js))
-(eval-after-load 'sgml-mode
-  '(define-key html-mode-map (kbd "C-c b") 'web-beautify-html))
-(eval-after-load 'css-mode
-  '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
-(eval-after-load 'js2-mode
-  '(add-hook 'js2-mode-hook
-	     (lambda ()
-	       (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
+;; (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (eval-after-load 'json-mode
   '(add-hook 'json-mode-hook
@@ -71,11 +87,22 @@
 
 ;;For more information, See URL https://github.com/yasuyk/web-beautify.
 
-(require 'flyspell-correct-ido)
-(require 'flycheck-pyflakes)
-(require 'flymake-python-pyflakes)
-(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
-
+;;(require 'flyspell-correct-ido)
+;;(require 'flymake-python-pyflakes)
+;;(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
+;;(require 'flycheck-pyflakes)
 (add-hook 'python-mode-hook 'flycheck-mode)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
+(custom-set-variables
+ ;;custom-set-variables was added by Custom.
+ ;;If you edit it by hand, you could mess it up, so be careful.
+ ;;Your init file should contain only one such instance.
+ ;;If there is more than one, they won't work right.
+ '(package-selected-packages (quote (magit iedit))))
+(custom-set-faces
+ ;;custom-set-faces was added by Custom.
+ ;;If you edit it by hand, you could mess it up, so be careful.
+ ;;Your init file should contain only one such instance.
+ ;;If there is more than one, they won't work right.
+ )
