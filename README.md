@@ -13,5 +13,8 @@ sudo chmod +x install_desktop.sh`
 sudo ./install_desktop.sh
 ```
 
+Install chrome packages: adblock, ghostery, last pass.
+Install PIA and GPG.
+
 http://ergoemacs.org/emacs/emacs_package_system.html
 http://www.enigmacurry.com/2009/01/21/autocompleteel-python-code-completion-in-emacs/
