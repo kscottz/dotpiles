@@ -2,6 +2,13 @@ dotpiles
 ========
 
 Dot files, configs, etc.
+
+Desktop 16.04
+====
+* Install machine with stock 16.04
+* [Create a new git ssh key.]( https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
+* 
+
 ```
 sudo apt-get install emacs24
 
