@@ -2,7 +2,7 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
-(setq package-list '(ace-flyspell ace-jump-mode auto-complete concurrent csv-mode ctable dash deferred epc epl flycheck flycheck-pyflakes flymake-python-pyflakes flymake-easy flymake-json flymake-json flyspell-correct jedi jedi-core jinja2-mode json-reformat python python-environment w3 virtualenv pkg-info pkg-info ))
+(setq package-list '(ace-flyspell ace-jump-mode auto-complete concurrent csv-mode ctable dash deferred epc epl flycheck flycheck-pyflakes flymake-python-pyflakes flymake-easy flymake-json flymake-json flyspell-correct jedi jedi-core jinja2-mode json-reformat python python-environment w3 virtualenv pkg-info pkg-info py-autopep8 ))
 (defun ensure-package-installed (&rest packages)
   "Assure every package is installed, ask for installation if it’s not.
 
@@ -26,7 +26,6 @@ Return a list of installed packages or nil for every skipped package."
 
 ;; activate installed packages
 (package-initialize)
-
 
 
 (custom-set-variables
@@ -87,22 +86,22 @@ Return a list of installed packages or nil for every skipped package."
 
 ;;For more information, See URL https://github.com/yasuyk/web-beautify.
 
-;;(require 'flyspell-correct-ido)
-;;(require 'flymake-python-pyflakes)
-;;(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
-;;(require 'flycheck-pyflakes)
-(add-hook 'python-mode-hook 'flycheck-mode)
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
-(custom-set-variables
- ;;custom-set-variables was added by Custom.
- ;;If you edit it by hand, you could mess it up, so be careful.
- ;;Your init file should contain only one such instance.
- ;;If there is more than one, they won't work right.
- '(package-selected-packages (quote (magit iedit))))
 (custom-set-faces
  ;;custom-set-faces was added by Custom.
  ;;If you edit it by hand, you could mess it up, so be careful.
  ;;Your init file should contain only one such instance.
  ;;If there is more than one, they won't work right.
  )
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; https://github.com/paetzke/py-autopep8.el
+(require 'py-autopep8)
+(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+
+(require 'flymake-python-pyflakes)
+(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
+(setq flymake-python-pyflakes-executable "flake8")
+
+;; http://tkf.github.io/emacs-jedi/latest/
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
