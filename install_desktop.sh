@@ -12,7 +12,8 @@ sudo apt-get install git emacs htop aptitude gimp vlc gimp-plugin-registry ipyth
 sudo pip install jupyter matplotlib
 sudo pip3 install jupyter matplotlib
 sudo apt-get install python3-setuptools
-
+sudo apt update
+sudo apt install peek
 sudo apt-get install ubuntu-restricted-extras
 alias ls="ls -flah"
 git config --global user.email "katherineAScott@gmail.com"
