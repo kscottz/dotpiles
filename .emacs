@@ -22,7 +22,7 @@ Return a list of installed packages or nil for every skipped package."
 (or (file-exists-p package-user-dir)
    (package-refresh-contents))
 
-(ensure-package-installed 'iedit 'magit) ;  --> (nil nil) if iedit and magit are already installed
+
 
 ;; activate installed packages
 (package-initialize)
@@ -33,11 +33,16 @@ Return a list of installed packages or nil for every skipped package."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(c-basic-offset 4)
  '(column-number-mode t)
  '(custom-enabled-themes (quote (wheatgrass)))
+ '(fill-column 80)
  '(inhibit-startup-screen t)
+ '(package-selected-packages
+   (quote
+    (spell-fu markdown-preview-mode markdown-mode+ ac-ispell flymd with-editor transient iedit dash)))
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
 (require 'ido)
@@ -86,22 +91,25 @@ Return a list of installed packages or nil for every skipped package."
 
 ;;For more information, See URL https://github.com/yasuyk/web-beautify.
 
-(custom-set-faces
- ;;custom-set-faces was added by Custom.
- ;;If you edit it by hand, you could mess it up, so be careful.
- ;;Your init file should contain only one such instance.
- ;;If there is more than one, they won't work right.
- )
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-;; https://github.com/paetzke/py-autopep8.el
-(require 'py-autopep8)
-(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
-(require 'flymake-python-pyflakes)
-(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
-(setq flymake-python-pyflakes-executable "flake8")
+
 
 ;; http://tkf.github.io/emacs-jedi/latest/
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
+
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(autoload 'gfm-mode "markdown-mode"
+   "Major mode for editing GitHub Flavored Markdown files" t)
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
+
+;; autowidth 8
+(setq-default auto-fill-function 'do-auto-fill)
+;; flyspell on markdown
+(add-hook 'markdown-mode-hook 'flyspell-mode)
