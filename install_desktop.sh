@@ -16,7 +16,7 @@ sudo apt-get install ubuntu-restricted-extras
 git config --global user.email "katherineAScott@gmail.com"
 git config --global user.name "kscottz"
 alias ls="ls -flah"
-cp ./dot_emacs_1204.txt ~/.emacs
+cp ./dot_emacs_2204.txt ~/.emacs
 sudo add-apt-repository ppa:peek-developers/stable
 sudo apt update
 sudo apt install peek
